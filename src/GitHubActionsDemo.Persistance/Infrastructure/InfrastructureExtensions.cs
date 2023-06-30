@@ -1,13 +1,20 @@
-using GitHubActionsDemo.Persistance;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GitHubActionsDemo.Service.Infrastructure
+namespace GitHubActionsDemo.Persistance.Infrastructure;
+
+public static class InfrastructureExtensions
 {
-    public static class InfrastructureExtensions
+    public static IServiceCollection AddPersistanceDependencies(this IServiceCollection services)
     {
-        public static IServiceCollection AddPersistanceDependencies(this IServiceCollection services)
-        {
-            return services.AddSingleton<ILibraryRespository, LibraryRespository>();
-        }
+        return services.AddSingleton<IDbContext, DbContext>()
+                       .AddScoped<ILibraryRespository, LibraryRespository>();
+    }
+
+    public static async Task InitDatabase(this WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<IDbContext>();
+        await context.Init();
     }
 }

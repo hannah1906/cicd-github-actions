@@ -43,7 +43,7 @@ public class LibraryController : ControllerBase
     }
 
     [HttpPost(Name = "AddAuthor")]
-    public async Task<AuthorResponse> AddauthorAsync(AuthorRequest authorRequest)
+    public async Task<AuthorResponse> AddAuthorAsync(AuthorRequest authorRequest)
     {
         var author = await _libraryService.AddAuthorAsync(authorRequest.Map());
         return author.Map();

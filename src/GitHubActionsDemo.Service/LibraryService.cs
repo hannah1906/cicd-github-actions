@@ -34,6 +34,6 @@ public class LibraryService : ILibraryService
     public async Task<IEnumerable<Book>> GetBooksAsync(int page, int pageSize)
     {
         var books = await _libraryRepository.GetBooksAsync(page, pageSize);
-        return books.Select(book => book.Map());
+        return books?.Select(book => book.Map()) ?? new List<Book>();
     }
 }

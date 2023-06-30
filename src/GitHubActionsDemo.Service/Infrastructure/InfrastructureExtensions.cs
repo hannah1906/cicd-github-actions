@@ -1,4 +1,4 @@
-using GitHubActionsDemo.Persistance;
+using GitHubActionsDemo.Persistance.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GitHubActionsDemo.Service.Infrastructure
@@ -8,8 +8,8 @@ namespace GitHubActionsDemo.Service.Infrastructure
         public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
         {
             return services
-                .AddScoped<ILibraryService, LibraryService>()
-                .AddPersistanceDependencies();
+                .AddPersistanceDependencies()
+                .AddScoped<ILibraryService, LibraryService>();
         }
     }
 }
