@@ -1,3 +1,4 @@
+using Dapper.FluentMap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,5 +17,11 @@ public static class InfrastructureExtensions
         using var scope = app.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<IDbContext>();
         await context.Init();
+
+        FluentMapper.Initialize(config =>
+        {
+            config.AddMap(new AuthorDbMap());
+            config.AddMap(new BookDbMap());
+        });
     }
 }

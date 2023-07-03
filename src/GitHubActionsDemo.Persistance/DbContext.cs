@@ -44,13 +44,13 @@ public class DbContext : IDbContext
         async Task _initAuthors()
         {
             var sql = """
-                CREATE TABLE IF NOT EXISTS Authors (
-                    AuthorId INT NOT NULL AUTO_INCREMENT,
-                    FirstName VARCHAR(255) NOT NULL,
-                    LastName VARCHAR(255) NOT NULL,
-                    DateCreated DATETIME NOT NULL,
-                    DateModified DATETIME NOT NULL,
-                    PRIMARY KEY (AuthorId)
+                CREATE TABLE IF NOT EXISTS authors (
+                    author_id INT NOT NULL AUTO_INCREMENT,
+                    first_name VARCHAR(255) NOT NULL,
+                    last_name VARCHAR(255) NOT NULL,
+                    date_created DATETIME NOT NULL,
+                    date_modified DATETIME NOT NULL,
+                    PRIMARY KEY (author_id)
                 );
             """;
             await connection.ExecuteAsync(sql);
@@ -59,16 +59,16 @@ public class DbContext : IDbContext
         async Task _initBooks()
         {
             var sql = """
-                CREATE TABLE IF NOT EXISTS Books(
-                    BookId INT NOT NULL AUTO_INCREMENT,
-                    Title VARCHAR(255),
-                    AuthorId INT NOT NULL,
-                    Isbn VARCHAR(13) NOT NULL,
-                    DatePublished DATETIME NOT NULL,
-                    DateCreated DATETIME NOT NULL,
-                    DateModified DATETIME NOT NULL,
-                    PRIMARY KEY(BookId),
-                    FOREIGN KEY(AuthorId) REFERENCES Authors(AuthorId)
+                CREATE TABLE IF NOT EXISTS books(
+                    book_id INT NOT NULL AUTO_INCREMENT,
+                    title VARCHAR(255),
+                    author_id INT NOT NULL,
+                    isbn VARCHAR(13) NOT NULL,
+                    date_published DATETIME NOT NULL,
+                    date_created DATETIME NOT NULL,
+                    date_modified DATETIME NOT NULL,
+                    PRIMARY KEY(book_id),
+                    FOREIGN KEY(author_id) REFERENCES authors(author_id)
                 );
             """;
             await connection.ExecuteAsync(sql);
