@@ -7,7 +7,7 @@ public class Book
         string title,
         Author author,
         string isbn,
-        DateOnly datePublished,
+        DateTime datePublished,
         DateTime dateCreated,
         DateTime dateModified
     )
@@ -25,7 +25,7 @@ public class Book
     public string Title { get; }
     public Author Author { get; }
     public string Isbn { get; }
-    public DateOnly DatePublished { get; }
+    public DateTime DatePublished { get; }
     public DateTime DateCreated { get; }
     public DateTime DateModified { get; }
 }

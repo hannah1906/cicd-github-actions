@@ -1,7 +1,14 @@
 using GitHubActionsDemo.Service.Infrastructure;
 using GitHubActionsDemo.Persistance.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

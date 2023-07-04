@@ -6,7 +6,7 @@ public class NewBook
         string title,
         int authorId,
         string isbn,
-        DateOnly datePublished
+        DateTime datePublished
     )
     {
         Title = title;
@@ -18,5 +18,5 @@ public class NewBook
     public string Title { get; }
     public int AuthorId { get; }
     public string Isbn { get; }
-    public DateOnly DatePublished { get; }
+    public DateTime DatePublished { get; }
 }

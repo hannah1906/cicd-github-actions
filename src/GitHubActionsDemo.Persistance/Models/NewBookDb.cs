@@ -6,7 +6,7 @@ public class NewBookDb
         string title,
         int authorId,
         string isbn,
-        DateOnly datePublished,
+        DateTime datePublished,
         DateTime dateCreated,
         DateTime dateModified
     )
@@ -23,7 +23,7 @@ public class NewBookDb
     public string Title { get; }
     public int AuthorId { get; }
     public string Isbn { get; }
-    public DateOnly DatePublished { get; }
+    public DateTime DatePublished { get; }
     public DateTime DateCreated { get; }
     public DateTime DateModified { get; }
 }
