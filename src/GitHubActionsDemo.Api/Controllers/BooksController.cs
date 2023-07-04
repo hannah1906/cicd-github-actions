@@ -2,6 +2,7 @@ using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Api.Mappers;
 using GitHubActionsDemo.Service;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 namespace GitHubActionsDemo.Api.Controllers;
 
@@ -10,42 +11,58 @@ namespace GitHubActionsDemo.Api.Controllers;
 public class BooksController : BaseController
 {
     private readonly ILibraryService _libraryService;
+    private readonly IValidator<BookRequest> _bookValidator;
+    private readonly IValidator<PageParameters> _pageValidator;
 
     public BooksController(
-        ILibraryService libraryService
+        ILibraryService libraryService,
+        IValidator<BookRequest> bookValidator,
+        IValidator<PageParameters> pageValidator
     )
     {
         _libraryService = libraryService ?? throw new ArgumentNullException(nameof(libraryService));
+        _bookValidator = bookValidator ?? throw new ArgumentNullException(nameof(bookValidator));
+        _pageValidator = pageValidator ?? throw new ArgumentNullException(nameof(pageValidator));
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetBooksAsync([FromQuery(Name = "page")] int page = 1, [FromQuery(Name = "pageSize")] int pageSize = 10)
+    public async Task<IResult> GetBooksAsync([FromQuery] PageParameters parameters)
     {
-        var result = await _libraryService.GetBooksAsync(page, pageSize);
+        var validationResult = await _pageValidator.ValidateAsync(parameters);
+
+        if (!validationResult.IsValid)
+            return Results.ValidationProblem(validationResult.ToDictionary());
+
+        var result = await _libraryService.GetBooksAsync(parameters.Page, parameters.PageSize);
 
         return result.Match(
-            success => PagedResult(page, pageSize, success.Value.Select(x => x.Map()).ToList()),
+            success => PagedResult(parameters.Page, parameters.PageSize, success.Value.Select(x => x.Map()).ToList()),
             error => InternalError()
         );
     }
 
     [HttpGet("{bookId}")]
-    public async Task<IActionResult> GetBookAsync(int bookId)
+    public async Task<IResult> GetBookAsync(int bookId)
     {
         var result = await _libraryService.GetBookAsync(bookId);
         return result.Match(
-            success => Ok(success.Value.Map()),
-            notfound => NotFound(),
+            success => Results.Ok(success.Value.Map()),
+            notfound => Results.NotFound(),
             error => InternalError()
         );
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddBookAsync([FromBody] BookRequest bookRequest)
+    public async Task<IResult> AddBookAsync([FromBody] BookRequest bookRequest)
     {
+        var validationResult = await _bookValidator.ValidateAsync(bookRequest);
+
+        if (!validationResult.IsValid)
+            return Results.ValidationProblem(validationResult.ToDictionary());
+
         var result = await _libraryService.AddBookAsync(bookRequest.Map());
         return result.Match(
-            success => Ok(success.Value.Map()),
+            success => Results.Ok(success.Value.Map()),
             error => InternalError()
         );
     }

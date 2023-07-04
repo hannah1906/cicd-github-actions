@@ -1,7 +1,9 @@
+using System.Runtime.Intrinsics.X86;
 using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Api.Mappers;
 using GitHubActionsDemo.Service;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 namespace GitHubActionsDemo.Api.Controllers;
 
@@ -10,42 +12,59 @@ namespace GitHubActionsDemo.Api.Controllers;
 public class AuthorsController : BaseController
 {
     private readonly ILibraryService _libraryService;
+    private readonly IValidator<AuthorRequest> _authorValidator;
+    private readonly IValidator<PageParameters> _pageValidator;
 
     public AuthorsController(
-        ILibraryService libraryService
+        ILibraryService libraryService,
+        IValidator<AuthorRequest> authorValidator,
+        IValidator<PageParameters> pageValidator
     )
     {
         _libraryService = libraryService ?? throw new ArgumentNullException(nameof(libraryService));
+        _authorValidator = authorValidator ?? throw new ArgumentNullException(nameof(authorValidator));
+        _pageValidator = pageValidator ?? throw new ArgumentNullException(nameof(pageValidator));
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddAuthorAsync([FromBody] AuthorRequest authorRequest)
+    public async Task<IResult> AddAuthorAsync([FromBody] AuthorRequest authorRequest)
     {
+        var validationResult = await _authorValidator.ValidateAsync(authorRequest);
+
+        if (!validationResult.IsValid)
+            return Results.ValidationProblem(validationResult.ToDictionary());
+
+
         var result = await _libraryService.AddAuthorAsync(authorRequest.Map());
         return result.Match(
-            success => Ok(success.Value.Map()),
+            success => Results.Ok(success.Value.Map()),
             error => InternalError()
         );
     }
 
     [HttpGet("{authorId}")]
-    public async Task<IActionResult> GetAuthorAsync(int authorId)
+    public async Task<IResult> GetAuthorAsync(int authorId)
     {
         var result = await _libraryService.GetAuthorAsync(authorId);
         return result.Match(
-            success => Ok(success.Value.Map()),
-            notfound => NotFound(),
+            success => Results.Ok(success.Value.Map()),
+            notfound => Results.NotFound(),
             error => InternalError()
         );
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAuthorsAsync([FromQuery(Name = "page")] int page = 1, [FromQuery(Name = "pageSize")] int pageSize = 10)
+    public async Task<IResult> GetAuthorsAsync([FromQuery] PageParameters parameters)
     {
-        var result = await _libraryService.GetAuthorsAsync(page, pageSize);
+        var validationResult = await _pageValidator.ValidateAsync(parameters);
+
+        if (!validationResult.IsValid)
+            return Results.ValidationProblem(validationResult.ToDictionary());
+
+        var result = await _libraryService.GetAuthorsAsync(parameters.Page, parameters.PageSize);
 
         return result.Match(
-            success => PagedResult(page, pageSize, success.Value.Select(x => x.Map()).ToList()),
+            success => PagedResult(parameters.Page, parameters.PageSize, success.Value.Select(x => x.Map()).ToList()),
             error => InternalError()
         );
     }

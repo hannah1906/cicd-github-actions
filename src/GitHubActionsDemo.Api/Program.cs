@@ -1,6 +1,9 @@
 using GitHubActionsDemo.Service.Infrastructure;
 using GitHubActionsDemo.Persistance.Infrastructure;
 using Serilog;
+using FluentValidation;
+using GitHubActionsDemo.Api.Models;
+using GitHubActionsDemo.Api.Models.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,10 @@ var logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 builder.Logging.AddSerilog(logger);
+
+builder.Services.AddScoped<IValidator<AuthorRequest>, AuthorRequestValidator>();
+builder.Services.AddScoped<IValidator<BookRequest>, BookRequestValidator>();
+builder.Services.AddScoped<IValidator<PageParameters>, PageParametersValidator>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

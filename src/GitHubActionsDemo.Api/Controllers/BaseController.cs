@@ -7,13 +7,13 @@ namespace GitHubActionsDemo.Api.Controllers;
 
 public class BaseController : ControllerBase
 {
-    public IActionResult InternalError()
+    public IResult InternalError()
     {
-        return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+        return Results.StatusCode((int)HttpStatusCode.InternalServerError);
     }
 
-    public IActionResult PagedResult<T>(int page, int pageSize, T result) where T : IList
+    public IResult PagedResult<T>(int page, int pageSize, T result) where T : IList
     {
-        return Ok(new PagedResponse<T>(page, pageSize, result));
+        return Results.Ok(new PagedResponse<T>(page, pageSize, result));
     }
 }
