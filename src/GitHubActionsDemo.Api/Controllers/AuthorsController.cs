@@ -1,4 +1,3 @@
-using System.Runtime.Intrinsics.X86;
 using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Api.Mappers;
 using GitHubActionsDemo.Service;
