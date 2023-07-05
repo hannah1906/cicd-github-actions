@@ -6,8 +6,6 @@ using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Service;
 using GitHubActionsDemo.Service.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Moq;
-using Shouldly;
 
 namespace GitHubActionsDemo.Api.Tests;
 
@@ -46,6 +44,7 @@ public class AuthorsControllerTests
             .ReturnsAsync(new ValidationResult(failures));
 
         var result = await _sut.AddAuthorAsync(request);
+        result.ShouldBeOfType<ProblemHttpResult>();
         var problem = result as ProblemHttpResult;
         problem.ShouldNotBeNull();
     }
@@ -71,10 +70,13 @@ public class AuthorsControllerTests
                                                    .ReturnsAsync(new OneOf.Types.Success<Author>(mockAuthor));
 
         var result = await _sut.AddAuthorAsync(request);
+        result.ShouldBeOfType<Ok<AuthorResponse>>();
         var successValue = result as Ok<AuthorResponse>;
         successValue.ShouldNotBeNull();
         successValue.StatusCode.ShouldBe((int)HttpStatusCode.OK);
         successValue.Value.FirstName.ShouldBe(request.FirstName);
         successValue.Value.LastName.ShouldBe(request.LastName);
     }
+
+    // TODO: Note in a production application there would be a complete set of unit tests here.
 }
