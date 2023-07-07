@@ -1,4 +1,4 @@
-namespace GitHubActionsDemo.Api.Contract;
+namespace GitHubActionsDemo.Api.Sdk.Books;
 
 public class BookRequest
 {

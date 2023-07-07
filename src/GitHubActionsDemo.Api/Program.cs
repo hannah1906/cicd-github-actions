@@ -2,7 +2,9 @@ using GitHubActionsDemo.Service.Infrastructure;
 using GitHubActionsDemo.Persistance.Infrastructure;
 using Serilog;
 using FluentValidation;
-using GitHubActionsDemo.Api.Contract;
+using GitHubActionsDemo.Api.Sdk.Authors;
+using GitHubActionsDemo.Api.Sdk.Books;
+using GitHubActionsDemo.Api.Sdk.Shared;
 using GitHubActionsDemo.Api.Models.Validators;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Net;
-using GitHubActionsDemo.Api.Models;
+using GitHubActionsDemo.Api.Sdk.Shared;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GitHubActionsDemo.Api.Controllers;
@@ -12,8 +12,13 @@ public class BaseController : ControllerBase
         return Results.StatusCode((int)HttpStatusCode.InternalServerError);
     }
 
-    public IResult PagedResult<T>(int page, int pageSize, T result) where T : IList
+    public IResult PagedResult<T>(int page, int pageSize, IList<T> result) where T : class
     {
-        return Results.Ok(new PagedResponse<T>(page, pageSize, result));
+        return Results.Ok(new PagedResponse<T>
+        {
+            Page = page,
+            PageSize = pageSize,
+            Result = result
+        });
     }
 }

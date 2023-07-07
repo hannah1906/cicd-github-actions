@@ -1,4 +1,5 @@
-using GitHubActionsDemo.Api.Contract;
+using GitHubActionsDemo.Api.Sdk.Books;
+using GitHubActionsDemo.Api.Sdk.Shared;
 using GitHubActionsDemo.Api.Mappers;
 using GitHubActionsDemo.Service;
 using Microsoft.AspNetCore.Mvc;

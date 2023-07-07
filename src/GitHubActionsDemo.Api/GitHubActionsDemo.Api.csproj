@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GitHubActionsDemo.Api.Contract\GitHubActionsDemo.Api.Contract.csproj" />
+    <ProjectReference Include="..\GitHubActionsDemo.Api.Sdk\GitHubActionsDemo.Api.Sdk.csproj" />
     <ProjectReference Include="..\GitHubActionsDemo.Service\GitHubActionsDemo.Service.csproj" />
     <ProjectReference Include="..\GitHubActionsDemo.Persistance\GitHubActionsDemo.Persistance.csproj" />
   </ItemGroup>

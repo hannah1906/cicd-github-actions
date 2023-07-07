@@ -1,12 +1,12 @@
 using System.Net;
 using FluentValidation;
 using FluentValidation.Results;
-using GitHubActionsDemo.Api.Contract;
 using GitHubActionsDemo.Api.Controllers;
-using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Service;
 using GitHubActionsDemo.Service.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using GitHubActionsDemo.Api.Sdk.Authors;
+using GitHubActionsDemo.Api.Sdk.Shared;
 
 namespace GitHubActionsDemo.Api.Tests;
 

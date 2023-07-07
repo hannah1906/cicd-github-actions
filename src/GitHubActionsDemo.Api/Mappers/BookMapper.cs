@@ -1,4 +1,4 @@
-using GitHubActionsDemo.Api.Contract;
+using GitHubActionsDemo.Api.Sdk.Books;
 using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Service.Models;
 
@@ -18,14 +18,15 @@ public static class BookMapper
 
     public static BookResponse Map(this Book book)
     {
-        return new BookResponse(
-            book.BookId,
-            book.Title,
-            book.Author.Map(),
-            book.Isbn,
-            book.DatePublished,
-            book.DateCreated,
-            book.DateModified
-        );
+        return new BookResponse
+        {
+            BookId = book.BookId,
+            Title = book.Title,
+            Author = book.Author.Map(),
+            Isbn = book.Isbn,
+            DatePublished = book.DatePublished,
+            DateCreated = book.DateCreated,
+            DateModified = book.DateModified
+        };
     }
 }

@@ -1,4 +1,4 @@
-using GitHubActionsDemo.Api.Contract;
+using GitHubActionsDemo.Api.Sdk.Authors;
 using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Service.Models;
 
@@ -16,12 +16,14 @@ public static class AuthorMapper
 
     public static AuthorResponse Map(this Author author)
     {
-        return new AuthorResponse(
-            author.AuthorId,
-            author.FirstName,
-            author.LastName,
-            author.DateCreated,
-            author.DateModified
-        );
+        return new AuthorResponse
+        {
+            AuthorId = author.AuthorId,
+            FirstName = author.FirstName,
+            LastName = author.LastName,
+            DateCreated = author.DateCreated,
+            DateModified = author.DateModified
+        };
+
     }
 }
