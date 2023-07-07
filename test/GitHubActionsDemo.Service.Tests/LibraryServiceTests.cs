@@ -66,4 +66,6 @@ public class LibraryServiceTests
         result.AsT0.Value.Title.ShouldBe(newBook.Title);
         result.AsT0.Value.Isbn.ShouldBe(newBook.Isbn);
     }
+
+    // TODO: Note in a production application there would be a complete set of unit tests here.
 }

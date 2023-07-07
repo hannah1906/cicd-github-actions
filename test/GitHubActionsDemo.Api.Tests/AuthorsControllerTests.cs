@@ -1,6 +1,7 @@
 using System.Net;
 using FluentValidation;
 using FluentValidation.Results;
+using GitHubActionsDemo.Api.Contract;
 using GitHubActionsDemo.Api.Controllers;
 using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Service;
@@ -13,7 +14,7 @@ public class AuthorsControllerTests
 {
     private readonly Mock<ILibraryService> _libraryService;
     private readonly Mock<IValidator<AuthorRequest>> _authorValidator;
-    private readonly Mock<IValidator<PageParameters>> _pageValidator;
+    private readonly Mock<IValidator<PageRequest>> _pageValidator;
 
     private readonly AuthorsController _sut;
 
@@ -21,7 +22,7 @@ public class AuthorsControllerTests
     {
         _libraryService = new Mock<ILibraryService>();
         _authorValidator = new Mock<IValidator<AuthorRequest>>();
-        _pageValidator = new Mock<IValidator<PageParameters>>();
+        _pageValidator = new Mock<IValidator<PageRequest>>();
         _sut = new AuthorsController(_libraryService.Object, _authorValidator.Object, _pageValidator.Object);
     }
 

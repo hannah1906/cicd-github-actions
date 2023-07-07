@@ -1,3 +1,4 @@
+using GitHubActionsDemo.Api.Contract;
 using GitHubActionsDemo.Api.Models;
 using GitHubActionsDemo.Service.Models;
 

@@ -1,4 +1,4 @@
-using GitHubActionsDemo.Api.Models;
+using GitHubActionsDemo.Api.Contract;
 using GitHubActionsDemo.Api.Mappers;
 using GitHubActionsDemo.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +12,12 @@ public class BooksController : BaseController
 {
     private readonly ILibraryService _libraryService;
     private readonly IValidator<BookRequest> _bookValidator;
-    private readonly IValidator<PageParameters> _pageValidator;
+    private readonly IValidator<PageRequest> _pageValidator;
 
     public BooksController(
         ILibraryService libraryService,
         IValidator<BookRequest> bookValidator,
-        IValidator<PageParameters> pageValidator
+        IValidator<PageRequest> pageValidator
     )
     {
         _libraryService = libraryService ?? throw new ArgumentNullException(nameof(libraryService));
@@ -26,7 +26,7 @@ public class BooksController : BaseController
     }
 
     [HttpGet]
-    public async Task<IResult> GetBooksAsync([FromQuery] PageParameters parameters)
+    public async Task<IResult> GetBooksAsync([FromQuery] PageRequest parameters)
     {
         var validationResult = await _pageValidator.ValidateAsync(parameters);
 

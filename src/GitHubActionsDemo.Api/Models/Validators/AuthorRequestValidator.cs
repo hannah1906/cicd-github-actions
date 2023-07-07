@@ -1,5 +1,5 @@
 using FluentValidation;
-
+using GitHubActionsDemo.Api.Contract;
 namespace GitHubActionsDemo.Api.Models.Validators;
 
 public class AuthorRequestValidator : AbstractValidator<AuthorRequest>

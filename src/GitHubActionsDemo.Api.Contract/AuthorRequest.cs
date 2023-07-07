@@ -1,4 +1,4 @@
-namespace GitHubActionsDemo.Api.Models;
+namespace GitHubActionsDemo.Api.Contract;
 
 public class AuthorRequest
 {
