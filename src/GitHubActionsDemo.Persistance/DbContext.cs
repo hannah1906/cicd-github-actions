@@ -63,7 +63,7 @@ public class DbContext : IDbContext
                     book_id INT NOT NULL AUTO_INCREMENT,
                     title VARCHAR(255),
                     author_id INT NOT NULL,
-                    isbn VARCHAR(13) NOT NULL,
+                    isbn VARCHAR(20) NOT NULL,
                     date_published DATETIME NOT NULL,
                     date_created DATETIME NOT NULL,
                     date_modified DATETIME NOT NULL,

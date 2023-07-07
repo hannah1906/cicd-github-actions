@@ -4,7 +4,7 @@ using GitHubActionsDemo.Persistance.Models;
 using GitHubActionsDemo.Service.Models;
 using Microsoft.Extensions.Logging;
 
-namespace GitHubActionsDemo.Service.Tests;
+namespace GitHubActionsDemo.Service.Unit.Tests;
 
 public class LibraryServiceTests
 {

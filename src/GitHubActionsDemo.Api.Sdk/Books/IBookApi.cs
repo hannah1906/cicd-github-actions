@@ -12,5 +12,5 @@ public interface IBookApi
     Task<BookResponse> GetBookAsync(int bookId);
 
     [Post("/books/")]
-    Task<IList<BookResponse>> CreateBookAsync([Body] BookRequest request);
+    Task<BookResponse> CreateBookAsync([Body] BookRequest request);
 }

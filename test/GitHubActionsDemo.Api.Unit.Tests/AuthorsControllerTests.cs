@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using GitHubActionsDemo.Api.Sdk.Authors;
 using GitHubActionsDemo.Api.Sdk.Shared;
 
-namespace GitHubActionsDemo.Api.Tests;
+namespace GitHubActionsDemo.Api.Unit.Tests;
 
 public class AuthorsControllerTests
 {
