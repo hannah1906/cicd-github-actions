@@ -18,10 +18,9 @@ jobs:
         run: dotnet build
       - name: Run Unit Tests
         run: dotnet test --filter Category=Unit --no-restore --verbosity normal
-      - uses: canastro/copy-file-action@master
-        with:
-          source: "test/**/TestResults/*.Unit.Tests.trx"
-          target: "TestResults"
+      - name: Copy Unit Test Results
+        run: mkdir TestResults; cp test/**/TestResults/*.Unit.Tests.trx TestResults/
+        shell: bash
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
       - name: Wait for docker containers to setup
@@ -29,10 +28,9 @@ jobs:
         shell: bash
       - name: Run Integration Tests
         run: dotnet test --filter Category=Integration --no-restore --verbosity normal
-      - uses: canastro/copy-file-action@master
-        with:
-          source: "test/**/TestResults/*.Integration.Tests.trx"
-          target: "TestResults"
+      - name: Copy Integration Test Results
+        run: cp test/**/TestResults/*.Integration.Tests.trx TestResults/
+        shell: bash
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()
