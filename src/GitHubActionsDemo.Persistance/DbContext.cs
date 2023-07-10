@@ -3,16 +3,22 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using GitHubActionsDemo.Persistance.Infrastructure;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace GitHubActionsDemo.Persistance;
 
 public class DbContext : IDbContext
 {
     private readonly DbSettings _dbSettings;
+    private readonly ILogger<DbContext> _logger;
 
-    public DbContext(IOptions<DbSettings> dbSettings)
+    public DbContext(
+        IOptions<DbSettings> dbSettings,
+        ILogger<DbContext> logger
+    )
     {
         _dbSettings = dbSettings?.Value ?? throw new ArgumentNullException(nameof(dbSettings));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public IDbConnection CreateConnection()
@@ -29,9 +35,11 @@ public class DbContext : IDbContext
     private async Task InitDatabase()
     {
         // create database if it doesn't exist
+        _logger.LogInformation(_dbSettings.ConnectionString);
         using var connection = new MySqlConnection(_dbSettings.ConnectionString);
         var sql = $"CREATE DATABASE IF NOT EXISTS `{_dbSettings.Database}`;";
         await connection.ExecuteAsync(sql);
+        _logger.LogInformation("Database created");
     }
 
     private async Task InitTables()

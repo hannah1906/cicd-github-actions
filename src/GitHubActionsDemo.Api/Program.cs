@@ -6,8 +6,11 @@ using GitHubActionsDemo.Api.Sdk.Authors;
 using GitHubActionsDemo.Api.Sdk.Books;
 using GitHubActionsDemo.Api.Sdk.Shared;
 using GitHubActionsDemo.Api.Models.Validators;
+using GitHubActionsDemo.Api.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.ConfigureAppSettings();
 
 builder.Logging.ClearProviders();
 var logger = new LoggerConfiguration()
