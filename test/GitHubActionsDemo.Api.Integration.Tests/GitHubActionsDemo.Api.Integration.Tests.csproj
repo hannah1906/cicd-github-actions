@@ -27,4 +27,9 @@
     <ProjectReference Include="..\..\src\GitHubActionsDemo.Api.Sdk\GitHubActionsDemo.Api.Sdk.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <VSTestLogger>trx%3bLogFileName=$(MSBuildProjectName).trx</VSTestLogger>
+    <VSTestResultsDirectory>$(SolutionDir)/TestResults</VSTestResultsDirectory>
+  </PropertyGroup>
+
 </Project>

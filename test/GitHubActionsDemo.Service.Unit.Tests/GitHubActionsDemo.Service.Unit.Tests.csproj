@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\src\GitHubActionsDemo.Service\GitHubActionsDemo.Service.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <VSTestLogger>trx%3bLogFileName=$(MSBuildProjectName).trx</VSTestLogger>
+    <VSTestResultsDirectory>$(SolutionDir)/TestResults</VSTestResultsDirectory>
+  </PropertyGroup>
 </Project>
