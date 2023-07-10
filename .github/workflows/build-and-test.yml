@@ -20,6 +20,9 @@ jobs:
         run: dotnet test --filter Unit --no-restore --verbosity normal
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
+      - name: Wait for docker containers to setup
+        run: sleep 30s
+        shell: bash
       - name: Run Integration Tests
         run: dotnet test --filter Integration --no-restore --verbosity normal
       - name: Test Report
