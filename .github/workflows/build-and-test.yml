@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build, Test and Push
 
 on: [push]
 
@@ -49,3 +49,12 @@ jobs:
           name: Test Results
           path: TestResults/*.trx
           reporter: dotnet-trx
+      - name: Push to ECR
+        if: github.ref == 'refs/heads/main'
+        id: ecr
+        uses: jwalton/gh-ecr-push@v1
+        with:
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+          image: githubactionsdemo.api:${{ steps.gitversion.outputs.nuGetVersion  }}
