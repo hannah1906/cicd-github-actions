@@ -20,7 +20,7 @@ jobs:
         run: dotnet test --filter Category=Unit --no-restore --verbosity normal
       - uses: canastro/copy-file-action@master
         with:
-          source: "test/**/TestResults/Unit.Tests.trx"
+          source: "test/**/TestResults/*.Unit.Tests.trx"
           target: "TestResults"
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
@@ -29,6 +29,10 @@ jobs:
         shell: bash
       - name: Run Integration Tests
         run: dotnet test --filter Category=Integration --no-restore --verbosity normal
+      - uses: canastro/copy-file-action@master
+        with:
+          source: "test/**/TestResults/*.Integration.Tests.trx"
+          target: "TestResults"
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()
