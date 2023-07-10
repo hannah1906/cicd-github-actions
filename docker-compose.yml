@@ -18,7 +18,7 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   api:
-    image: GitHubActionsDemo.Api:${GITVERSION_SEMVER}
+    image: githubactionsdemo.api:${VERSION}
     build: .
     restart: always
     depends_on:
