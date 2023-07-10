@@ -20,7 +20,7 @@ jobs:
         run: dotnet test --filter Category=Unit --no-restore --verbosity normal
       - uses: canastro/copy-file-action@master
         with:
-          source: "test/**/TestResults/*UnitTests.trx"
+          source: "test/**/TestResults/Unit.Tests.trx"
           target: "TestResults"
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
