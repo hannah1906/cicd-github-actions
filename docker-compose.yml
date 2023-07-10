@@ -24,7 +24,7 @@ services:
     depends_on:
        - db
     ports:
-      - '5275:5275'
+      - '5200:5275'
     environment:
       - ASPNETCORE_URLS=http://*:5275
       - API_DbSettings__ConnectionString=Server=db;Database=library;Uid=dbuser;Pwd=libraryDbPassword;

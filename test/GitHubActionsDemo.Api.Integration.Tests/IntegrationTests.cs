@@ -1,16 +1,26 @@
 using GitHubActionsDemo.Api.Sdk.Authors;
 using GitHubActionsDemo.Api.Sdk.Books;
+using Microsoft.Extensions.Configuration;
 using Refit;
 using Shouldly;
+using Xunit.Sdk;
 
 namespace GitHubActionsDemo.Api.Integration.Tests;
 
 [Trait("Category", "Integration")]
 public class IntegrationTests
 {
-    private const string BaseUri = "http://localhost:5275";
-    private readonly IAuthorApi _authorApi = RestService.For<IAuthorApi>(BaseUri);
-    private readonly IBookApi _bookApi = RestService.For<IBookApi>(BaseUri);
+    public readonly IConfiguration _config;
+    private readonly IAuthorApi _authorApi;
+    private readonly IBookApi _bookApi;
+
+    public IntegrationTests(IConfiguration config)
+    {
+        _config = config ?? throw new ArgumentNullException(nameof(config));
+        var baseUrl = _config.GetValue<string>("BASE_URL");
+        _authorApi = RestService.For<IAuthorApi>(baseUrl);
+        _bookApi = RestService.For<IBookApi>(baseUrl);
+    }
 
     [Fact]
     public async Task Given_valid_author_should_create_author()
