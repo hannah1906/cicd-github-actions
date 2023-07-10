@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Fetch unshallow
+        run: git fetch --prune --tags --unshallow
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.7
         with:
@@ -15,8 +17,6 @@ jobs:
       - name: Determine Version
         id: gitversion
         uses: gittools/actions/gitversion/execute@v0.9.7
-      - name: Semver
-        run: echo $GITVERSION_SEMVER
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
