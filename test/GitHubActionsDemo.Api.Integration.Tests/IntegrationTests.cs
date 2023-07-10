@@ -1,4 +1,3 @@
-
 using GitHubActionsDemo.Api.Sdk.Authors;
 using GitHubActionsDemo.Api.Sdk.Books;
 using Refit;
@@ -6,6 +5,7 @@ using Shouldly;
 
 namespace GitHubActionsDemo.Api.Integration.Tests;
 
+[Trait("Category", "Integration")]
 public class IntegrationTests
 {
     private const string BaseUri = "http://localhost:5275";

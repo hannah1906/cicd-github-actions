@@ -1,4 +1,3 @@
-using System;
 using GitHubActionsDemo.Persistance;
 using GitHubActionsDemo.Persistance.Models;
 using GitHubActionsDemo.Service.Models;
@@ -6,6 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GitHubActionsDemo.Service.Unit.Tests;
 
+[Trait("Category", "Unit")]
 public class LibraryServiceTests
 {
     private readonly Mock<ILibraryRespository> _libraryRespository;

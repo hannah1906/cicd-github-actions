@@ -10,6 +10,7 @@ using GitHubActionsDemo.Api.Sdk.Shared;
 
 namespace GitHubActionsDemo.Api.Unit.Tests;
 
+[Trait("Category", "Unit")]
 public class AuthorsControllerTests
 {
     private readonly Mock<ILibraryService> _libraryService;

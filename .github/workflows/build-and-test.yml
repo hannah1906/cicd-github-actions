@@ -17,14 +17,18 @@ jobs:
       - name: Build
         run: dotnet build
       - name: Run Unit Tests
-        run: dotnet test --filter Unit --no-restore --verbosity normal
+        run: dotnet test --filter Category=Unit --no-restore --verbosity normal
+      - uses: canastro/copy-file-action@master
+        with:
+          source: "test/**/TestResults/*UnitTests.trx"
+          target: "TestResults"
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
       - name: Wait for docker containers to setup
         run: sleep 30s
         shell: bash
       - name: Run Integration Tests
-        run: dotnet test --filter Integration --no-restore --verbosity normal
+        run: dotnet test --filter Category=Integration --no-restore --verbosity normal
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()
