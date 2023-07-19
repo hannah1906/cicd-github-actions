@@ -60,4 +60,3 @@ The GitHub Actions workflow file [build-and-test.yml](.github/workflows/build-an
 5. Running integration tests against docker API
 6. Displaying Test Results
 7. Pushing tagged docker image to ECR
-8. 
